@@ -1,0 +1,20 @@
+{
+  "name": "node-data",
+  "version": "1.0.0",
+  "description": "Projeto contendo implementações de: multdatasources (SQL e NoSQL), serviço RESTFul, web token e documentação com swagger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allandeyvson/node-data.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allandeyvson/node-data/issues"
+  },
+  "homepage": "https://github.com/allandeyvson/node-data#readme"
+}
