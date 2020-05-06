@@ -62,16 +62,15 @@ class PostgresSQLStrategy extends InterfaceDataBase {
         return dataValues
     }
 
-    read(item){
-        console.log('o item foi lido no postgres')
+    async read(item = {}){
+        return this._teams.findAll({where: item, raw: true})
     }
 
-    update(item){
-        console.log('o item foi atualizado no postgres')
+    async update(item){
+        return this._teams.update(item, {where: {id : item.id}})
     }
 
     delete(item){
-        console.log('o item foi deletado no postgres')
     }
 }
 

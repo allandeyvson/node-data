@@ -10,12 +10,18 @@ const MOCK_TEAM_CREATE = {
     country: 'Brasil'
 }
 
+const MOCK_TEAM_UPDATE = {
+    name: 'Manchester United',
+    country: 'Inglaterra'
+}
+
 describe('Postgres Strategy', function() {
     
     this.timeout(Infinity);
     
     this.beforeAll(async () => {
         await context.connect()
+        await context.create(MOCK_TEAM_UPDATE)
     })
     
     it('PostgresSQL Conection', async () => {
@@ -23,9 +29,28 @@ describe('Postgres Strategy', function() {
         assert.equal(result, true)
     })
         
-    it('Cadastrar time de futebol', async function(){
+    it('Cadastrar time de futebol', async () => {
         const result = await context.create(MOCK_TEAM_CREATE)
         delete result.id
         assert.deepEqual(result, MOCK_TEAM_CREATE)
+    })
+
+    it('Listar time de futebol', async () => {
+        const [result] = await context.read({name: MOCK_TEAM_CREATE.name})
+        delete result.id
+        assert.deepEqual(result, MOCK_TEAM_CREATE)
+    })
+
+    it('Atualizar time de futebol', async () => {
+        const [preUpdateItem] = await context.read({name: MOCK_TEAM_UPDATE.name})
+        const updateItem = {
+            ...preUpdateItem,
+            name: 'Liverpool'
+        }
+        const [result] = await context.update(updateItem)
+        const [posUpdateItem] = await context.read({id: updateItem.id})
+
+        assert.deepEqual(result, 1)
+        assert.deepEqual(posUpdateItem.name, updateItem.name)
     })
 })
