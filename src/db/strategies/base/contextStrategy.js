@@ -1,26 +1,35 @@
-const InterfaceCrud = require('./../interfaces/interfaceCrud')
+const InterfaceDataBase = require('../interfaces/interfaceDataBase')
 
-class ContextStrategy extends InterfaceCrud {
+class ContextStrategy extends InterfaceDataBase {
+    
     constructor(strategy){
         super()
         this._dataBase = strategy
     }
 
+    connect(){
+        return this._dataBase.connect()
+    }
+
+    isConnected(){
+        return this._dataBase.isConnected()
+    }
+
     create(item){
-        this._dataBase.create(item)
+        return this._dataBase.create(item)
     }
 
     read(item){
-        this._dataBase.read(item)
+        return this._dataBase.read(item)
     }
 
     update(item){
-        this._dataBase.update(item)
+        return this._dataBase.update(item)
     }
 
     delete(item){
-        this._dataBase.delete(item)
+        return this._dataBase.delete(item)
     }
 }
 
-module.exports = ContextStrategy
+module.exports = ContextStrategy;
