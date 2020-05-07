@@ -30,8 +30,6 @@ class ContextStrategy extends InterfaceDataBase {
     delete(item){
         return this._dataBase.delete(item)
     }
-    
-
 }
 
 module.exports = ContextStrategy;

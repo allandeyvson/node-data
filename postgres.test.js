@@ -24,6 +24,10 @@ describe('Postgres Strategy', function() {
         await context.create(MOCK_TEAM_UPDATE)
     })
     
+    this.afterAll(async () =>{
+        await context.delete()
+    })
+    
     it('PostgresSQL Conection', async () => {
         const result = await context.isConnected()
         assert.equal(result, true)
@@ -52,5 +56,11 @@ describe('Postgres Strategy', function() {
 
         assert.deepEqual(result, 1)
         assert.deepEqual(posUpdateItem.name, updateItem.name)
+    })
+
+    it('Remove time de futebol', async () =>{
+        const [deleteItem] = await context.read({name: MOCK_TEAM_CREATE.name})
+        const result = await context.delete(deleteItem.id)
+        assert.deepEqual(result, 1)
     })
 })

@@ -70,7 +70,9 @@ class PostgresSQLStrategy extends InterfaceDataBase {
         return this._teams.update(item, {where: {id : item.id}})
     }
 
-    delete(item){
+    delete(id){
+        const query = id ? {id} : {}
+        return this._teams.destroy({where: query})
     }
 }
 
