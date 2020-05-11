@@ -1,9 +1,7 @@
 const assert = require('assert')
-const PostgresSQLStrategy = require('./src/db/strategies/postgresSQLStrategy')
-const Context = require('./src/db/strategies/base/contextStrategy')
-
-//const context = new PostgresSQLStrategy()
-const context = new Context(new PostgresSQLStrategy())
+const PostgresSQLStrategy = require('../../../db/strategies/postgres/postgresSQLStrategy')
+const Context = require('../../../db/strategies/base/contextStrategy')
+const TeamSchema = require('../../../db/strategies/postgres/schemas/team')
 
 const MOCK_TEAM_CREATE = {
     name: 'Palmeiras',
@@ -14,13 +12,16 @@ const MOCK_TEAM_UPDATE = {
     name: 'Manchester United',
     country: 'Inglaterra'
 }
+let context = {}
 
 describe('Postgres Strategy', function() {
     
     this.timeout(Infinity);
     
     this.beforeAll(async () => {
-        await context.connect()
+        const connection = await PostgresSQLStrategy.connect()
+        const model = await PostgresSQLStrategy.defineModel(connection, TeamSchema)
+        context = new Context(new PostgresSQLStrategy(connection, model))
         await context.create(MOCK_TEAM_UPDATE)
     })
     

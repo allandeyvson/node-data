@@ -1,8 +1,7 @@
 const assert = require('assert')
-const MongoDBStrategy = require('./src/db/strategies/mongoDBStrategy')
-const Context = require('./src/db/strategies/base/contextStrategy')
-
-const context = new Context(new MongoDBStrategy())
+const MongoDBStrategy = require('../../../db/strategies/mongoDB/mongoDBStrategy')
+const Context = require('../../../db/strategies/base/contextStrategy')
+const TeamSchema = require('../../../db/strategies/mongoDB/schemas/team')
 
 const MOCK_TEAM_CREATE = {
     name: 'Palmeiras',
@@ -15,13 +14,20 @@ const MOCK_TEAM_UPDATE = {
 }
 
 let MOCK_ID_TEAM_UPDATE= ''
+let MOCK_ID_TEAM_CREATE = ''
+let context = {}
 
 describe('MongoDB Strategy', function (){
 
     this.beforeAll(async () => {
-        await context.connect()
+        const connection = MongoDBStrategy.connect()
+        context = new Context(new MongoDBStrategy(connection, TeamSchema))
         const result = await context.create(MOCK_TEAM_UPDATE)
         MOCK_ID_TEAM_UPDATE = result._id
+    })
+
+    this.afterAll(async () => {
+        await context.delete(MOCK_ID_TEAM_CREATE)
     })
 
     it('MongoDB connection', async () => {
@@ -30,8 +36,11 @@ describe('MongoDB Strategy', function (){
     })
     
     it('Cadastrar time de futebol', async () => {
-        const {name, country} = await context.create(MOCK_TEAM_CREATE)
-        assert.deepEqual({name, country}, MOCK_TEAM_CREATE)
+        const {_id, name, country} = await context.create(MOCK_TEAM_CREATE)
+        const result = {_id, name, country}
+        MOCK_ID_TEAM_CREATE = result._id
+        delete result._id
+        assert.deepEqual(result, MOCK_TEAM_CREATE)
     })
 
     it('Listar time de futebol', async () => {
