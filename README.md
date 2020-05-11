@@ -22,5 +22,9 @@ docker run \
 ```
 docker exec -it mongodb \
     mongo --host localhost -u admin -p minhasenhaadmin --authenticationDatabase admin \
-    --eval "db.getSiblingDB('teams').createUser({user: 'dev', pwd: 'minhasenhadev', roles:[{role: 'readwrite', db: 'teams'}]})"
+    --eval "db.getSiblingDB('teams').createUser({user: 'dev', pwd: 'minhasenhadev', roles:[{role: 'readWrite', db: 'teams'}]})"
+```
+
+```
+docker exec -it CONTAINER_ID mongo -u dev -p minhasenhadev --authenticationDatabase teams 
 ```
