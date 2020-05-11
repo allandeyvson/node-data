@@ -26,6 +26,10 @@ class ContextStrategy extends InterfaceDataBase {
     update(item){
         return this._dataBase.update(item)
     }
+    
+    update(id,item){
+        return this._dataBase.update(id,item)
+    }
 
     delete(item){
         return this._dataBase.delete(item)

@@ -22,6 +22,10 @@ class InterfaceDataBase {
         throw new NoImplementedException()
     }
 
+    update(id, item){
+        throw new NoImplementedException()
+    }
+
     delete(item){
         throw new NoImplementedException()
     }
