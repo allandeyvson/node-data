@@ -18,6 +18,10 @@ class InterfaceDataBase {
         throw new NoImplementedException()
     }
 
+    read(item, skip, limit){
+        throw new NoImplementedException()
+    }
+
     update(item){
         throw new NoImplementedException()
     }

@@ -4,7 +4,7 @@
   "description": "Projeto contendo implementações de: multdatasources (SQL e NoSQL), serviço RESTFul, web token e documentação com swagger",
   "main": "index.js",
   "scripts": {
-    "test": "mocha src/test/db/strategies/*.test.js"
+    "test": "mocha --recursive src/test"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/allandeyvson/node-data#readme",
   "dependencies": {
+    "hapi": "^18.1.0",
+    "joi": "^14.3.1",
     "mongoose": "^5.9.12",
     "pg": "^8.0.3",
     "pg-hstore": "^2.3.3",

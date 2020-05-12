@@ -23,6 +23,10 @@ class ContextStrategy extends InterfaceDataBase {
         return this._dataBase.read(item)
     }
 
+    read(item, skip, limit){
+        return this._dataBase.read(item, skip, limit)
+    }
+
     update(item){
         return this._dataBase.update(item)
     }
