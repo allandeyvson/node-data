@@ -43,8 +43,8 @@ class MongoDB extends InterfaceDataBase {
         return this.schema.create(item)
     }
 
-    read(item) {
-        return this.schema.find(item)
+    read(item, skip = 0, limit = 0) {
+        return this.schema.find(item).skip(skip).limit(limit)
     }
 
     update(id, item) {
