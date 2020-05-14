@@ -73,10 +73,12 @@ describe.only('Suite de testes API', function (){
             url: '/teams', 
             payload: MOCK_TEAM_CREATE
         })
-        const { _id } = JSON.parse(result.payload)
+        const { _id, message} = JSON.parse(result.payload)
         MOCK_ID_TEAM_CREATE = _id
 
         assert.ok(result.statusCode === 200)
+        assert.notStrictEqual(_id, undefined)
+        assert.deepEqual(message, 'Time cadastrado com sucesso.')
     })
 
     it('Atualizar PATCH /teams/:id - Deve atualizar um time', async () => {
@@ -88,7 +90,9 @@ describe.only('Suite de testes API', function (){
             url: `/teams/${_id}`, 
             payload: query
         })
+        const { message } = JSON.parse(result.payload)
         assert.ok(result.statusCode === 200)
+        assert.deepEqual(message, 'Time atualizado com sucesso.')
     })
 
     it('Remover DELETE /teams/:id - Deve remover um time', async () => {
@@ -99,6 +103,9 @@ describe.only('Suite de testes API', function (){
             url: `/teams/${_id}` 
         })
 
+        const {message} = JSON.parse(result.payload)
         assert.ok(result.statusCode === 200)
+
+        assert.deepEqual(message, 'Time removido com sucesso.')
     })
 })
