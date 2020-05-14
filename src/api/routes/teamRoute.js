@@ -60,7 +60,12 @@ class TeamRoutes extends BaseRoute{
             handler: async (request) => {
                 try {
                     const {name, country} = request.payload
-                    return await this.db.create({name, country})
+                    const result  = await this.db.create({name, country})
+
+                    return {  
+                        _id : result._id,                
+                        message: 'Time cadastrado com sucesso.'
+                    }
                 }catch(error){
                     console.error('error na api ', error)
                     return Boom.internal()
@@ -95,7 +100,11 @@ class TeamRoutes extends BaseRoute{
                     const dataString = JSON.stringify(payload)
                     const data = JSON.parse(dataString)
                     
-                    return await this.db.update(id, data)
+                    const result = await this.db.update(id, data)
+
+                    return {  
+                        message: 'Time atualizado com sucesso.'
+                    }
                 }catch(error){
                     console.error('error na api ', error)
                     return Boom.internal()
@@ -122,7 +131,11 @@ class TeamRoutes extends BaseRoute{
             handler: async (request) => {
                 try {
                     const {id} = request.params
-                    return await this.db.delete(id)
+                    const result = await this.db.delete(id)
+
+                    return {  
+                        message: 'Time removido com sucesso.'
+                    }
                 }catch(error){
                     console.error('error na api ', error)
                     return Boom.internal()
