@@ -13,6 +13,9 @@ class TeamRoutes extends BaseRoute{
             path: '/teams',
             method: 'GET',
             config: {
+                description: 'Deve listar time de futebol',
+                notes: 'Pode paginar resultados e filtrar por nome',
+                tags:[ 'api'],
                 validate: {
                     failAction: (request, response, error) => {
                         throw error
@@ -47,6 +50,9 @@ class TeamRoutes extends BaseRoute{
             path: '/teams',
             method: 'POST',
             config: {
+                description: 'Deve cadastrar time de futebol',
+                notes: 'Pode cadastrar time de futebol por nome e país',
+                tags:[ 'api'],
                 validate: {
                     failAction: (request, response, error) => {
                         throw error
@@ -79,8 +85,10 @@ class TeamRoutes extends BaseRoute{
             path: '/teams/{id}',
             method: 'PATCH',
             config: {
+                description: 'Deve atualizar time de futebol',
+                notes: 'Pode atualizar qualquer campo',
+                tags:[ 'api'],
                 validate: {
-
                     failAction: (request, response, error) => {
                         throw error
                     },
@@ -115,10 +123,12 @@ class TeamRoutes extends BaseRoute{
 
     delete (){
         return {
-
             path: '/teams/{id}',
             method: 'DELETE',
             config: {
+                description: 'Deve deletar time de futebol',
+                notes: 'Pode deletar time de futebol por id',
+                tags:[ 'api'],
                 validate: {
                     failAction: (request, response, error) => {
                         throw error
