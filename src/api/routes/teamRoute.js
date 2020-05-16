@@ -143,6 +143,11 @@ class TeamRoutes extends BaseRoute{
                     const {id} = request.params
                     const result = await this.db.delete(id)
 
+                    if(result.n === 0)
+                        return {
+                            message: 'Time não encontrado no banco de dados.'
+                        }
+
                     return {  
                         message: 'Time removido com sucesso.'
                     }
