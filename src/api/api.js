@@ -1,11 +1,18 @@
 const Hapi = require('hapi')
 const Context = require('../db/strategies/base/contextStrategy')
 const Mongo = require('../db/strategies/mongoDB/mongoDBStrategy')
+
 const TeamSchema = require('../db/strategies/mongoDB/schemas/team')
 const TeamRoute = require('./routes/teamRoute')
+
+const AuthRoute = require('./routes/authRoute')
+const apiKey = require('./credentials.json').privateKey
+const HapiJwt = require('hapi-auth-jwt2')
+
 const Vision = require('vision')
 const Inert = require('inert')
 const HapiSwagger = require('hapi-swagger')
+
 
 const api = new Hapi.Server({
     port: 9000
@@ -28,6 +35,7 @@ async function main() {
     }
 
     await api.register([
+        HapiJwt,
         Inert,
         Vision,
         {
@@ -36,7 +44,21 @@ async function main() {
         }
     ])
 
+    api.auth.strategy('jwt', 'jwt', {
+        key: apiKey,
+        /*options: {
+            //expireIn: 20
+        }*/
+        validate: (data, request) => {
+            //colocar validações aqui
+            return {
+                isValid: true
+            }
+        }
+    })
+    api.auth.default('jwt')
     api.route([
+        ... mapRoutes(new AuthRoute(apiKey), AuthRoute.methods()),
         ... mapRoutes(new TeamRoute(context), TeamRoute.methods())
     ])
 

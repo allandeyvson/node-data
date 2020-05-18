@@ -2,6 +2,10 @@ const BaseRoute = require('./base/baseRoute')
 const Joi = require('joi')
 const Boom = require('boom')
 
+const headers = Joi.object({
+    authorization: Joi.string().required()
+}).unknown()
+
 class TeamRoutes extends BaseRoute{
     constructor(db){
         super()
@@ -17,6 +21,7 @@ class TeamRoutes extends BaseRoute{
                 notes: 'Pode paginar resultados e filtrar por nome',
                 tags:[ 'api'],
                 validate: {
+                    headers,
                     failAction: (request, response, error) => {
                         throw error
                     },
@@ -54,6 +59,7 @@ class TeamRoutes extends BaseRoute{
                 notes: 'Pode cadastrar time de futebol por nome e país',
                 tags:[ 'api'],
                 validate: {
+                    headers,
                     failAction: (request, response, error) => {
                         throw error
                     },
@@ -89,6 +95,7 @@ class TeamRoutes extends BaseRoute{
                 notes: 'Pode atualizar qualquer campo',
                 tags:[ 'api'],
                 validate: {
+                    headers,
                     failAction: (request, response, error) => {
                         throw error
                     },
@@ -130,6 +137,7 @@ class TeamRoutes extends BaseRoute{
                 notes: 'Pode deletar time de futebol por id',
                 tags:[ 'api'],
                 validate: {
+                    headers,
                     failAction: (request, response, error) => {
                         throw error
                     },

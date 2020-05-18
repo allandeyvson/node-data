@@ -1,5 +1,6 @@
 const assert = require('assert')
 const api = require('../../api/api')
+const token = require('../../api/credentials.json').token
 
 let app = {}
 
@@ -13,17 +14,22 @@ const MOCK_TEAM_UPDATE = {
     country: 'Brasil'
 }
 
+const headers = {
+    authorization: token
+}
+
 let MOCK_ID_TEAM_CREATE = ''
 let MOCK_ID_TEAM_UPDATE = ''
 
 
-describe.only('Suite de testes API', function (){
+describe('Suite de testes API', function (){
 
     this.beforeAll(async () => {
         app = await api
         const result = await app.inject({
             method: 'POST',
-            url: '/teams', 
+            url: '/teams',
+            headers,
             payload: MOCK_TEAM_UPDATE
         })
         const { _id } = JSON.parse(result.payload)
@@ -35,6 +41,7 @@ describe.only('Suite de testes API', function (){
 
         const result = await app.inject({
             method: 'DELETE',
+            headers,
             url: `/teams/${_id}` 
         })
     })
@@ -42,6 +49,7 @@ describe.only('Suite de testes API', function (){
     it('Listar GET /teams - Deve validar se serivço esta funcional, ou seja, status 200', async () => {
         const result = await app.inject({
             method: 'GET',
+            headers,
             url: '/teams'
         })
         const statusCode = result.statusCode
@@ -52,6 +60,7 @@ describe.only('Suite de testes API', function (){
         const limit = 1
         const result = await app.inject({
             method: 'GET',
+            headers,
             url: `/teams?limit=${limit}`
         })
         const data = JSON.parse(result.payload)
@@ -62,6 +71,7 @@ describe.only('Suite de testes API', function (){
         const limit = 'aaa'
         const result = await app.inject({
             method: 'GET',
+            headers,
             url: `/teams?limit=${limit}`
         })        
         assert.ok(result.statusCode === 400)
@@ -71,6 +81,7 @@ describe.only('Suite de testes API', function (){
         const result = await app.inject({
             method: 'POST',
             url: '/teams', 
+            headers,
             payload: MOCK_TEAM_CREATE
         })
         const { _id, message} = JSON.parse(result.payload)
@@ -88,6 +99,7 @@ describe.only('Suite de testes API', function (){
         const result = await app.inject({
             method: 'PATCH',
             url: `/teams/${_id}`, 
+            headers,
             payload: query
         })
         const { message } = JSON.parse(result.payload)
@@ -100,6 +112,7 @@ describe.only('Suite de testes API', function (){
 
         const result = await app.inject({
             method: 'DELETE',
+            headers,
             url: `/teams/${_id}` 
         })
 
