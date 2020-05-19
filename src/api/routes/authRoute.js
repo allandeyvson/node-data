@@ -7,11 +7,6 @@ const PassowordHelper = require('../../helpers/passwordHelper')
 const failAction = (request, response, error) => {
     throw error
 }
-const credentials = require('../credentials.json')
-const USER = {
-    username: credentials.username,
-    password: credentials.password
-}
 
 class AuthRoute extends BaseRoute {
     constructor(secret, db) {

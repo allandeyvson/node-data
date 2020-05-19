@@ -1,3 +1,15 @@
+const {config} = require('dotenv')
+const {join} = require('path')
+const {ok} = require('assert')
+
+const env = process.env.NODE_ENV || "dev"
+ok(env === "prod" || env === "dev", "env é invalida!")
+
+const configPath = join(__dirname, '../../config', `.env.${env}`)
+config({
+    path: configPath
+})
+
 const Hapi = require('hapi')
 const Context = require('../db/strategies/base/contextStrategy')
 const Mongo = require('../db/strategies/mongoDB/mongoDBStrategy')
@@ -9,7 +21,7 @@ const UserSchema = require('../db/strategies/postgres/schemas/user')
 const Postgres = require('../db/strategies/postgres/postgresSQLStrategy')
 
 const AuthRoute = require('./routes/authRoute')
-const apiKey = require('./credentials.json').privateKey
+const apiKey = process.env.PRIVATE_KEY
 const HapiJwt = require('hapi-auth-jwt2')
 
 const Vision = require('vision')
@@ -18,7 +30,7 @@ const HapiSwagger = require('hapi-swagger')
 
 
 const api = new Hapi.Server({
-    port: 9000
+    port: process.env.PORT
 })
 
 function mapRoutes(instance, methods) {

@@ -105,3 +105,5 @@ dist
 
 #arquivos com credenciais
 src/api/credentials.json
+config/.env.dev
+config/.env.prod

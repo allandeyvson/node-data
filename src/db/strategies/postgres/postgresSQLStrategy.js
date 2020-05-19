@@ -16,17 +16,15 @@ class PostgresSQLStrategy extends InterfaceDataBase {
     }
 
     static async connect(){
-        const connection = new Sequelize(
-            'teams',
-            'dev',
-            'minhasenhadev', {
-                host: 'localhost',
-                dialect: 'postgres',
-                quoteIdentifiers: false,
-                operatorAliases: false, 
-                logging: false
-            }
-        )
+        const connection = new Sequelize(process.env.POSTGRES_URL, {
+            quoteIdentifiers: false,
+            operatorAliases: false, 
+            logging: false, 
+            ssl: process.env.SSL_DB,
+            dialectOptions:{
+                ssl: process.env.SSL_DB 
+            }       
+        })
         return connection
     }
 

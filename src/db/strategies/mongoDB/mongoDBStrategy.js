@@ -15,7 +15,7 @@ class MongoDB extends InterfaceDataBase {
     }
 
     static connect() {
-        Mongoose.connect('mongodb://dev:minhasenhadev@localhost:27017/teams', { 
+        Mongoose.connect(process.env.MONGODB_URL, { 
             useNewUrlParser: true , 
             useUnifiedTopology: true
         }, function (error) {
