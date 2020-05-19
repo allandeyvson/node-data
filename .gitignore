@@ -104,6 +104,6 @@ dist
 .tern-port
 
 #arquivos com credenciais
-src/api/credentials.json
 config/.env.dev
 config/.env.prod
+src/*/credentials.json
