@@ -1,6 +1,6 @@
 const assert = require('assert')
 const api = require('../api/api')
-const credentials = require('../api/credentials.json')
+const credentials = require('./credentials.json')
 
 let app = {}
 

@@ -5,9 +5,9 @@ File: `credentials.json`
 ```
 {
   "apiKey": "string",
-  "privateKey": "string", 
 
   "username": "string",
-  "password": "string"
+  "password": "string",
+  "hash": "string"
 }
 ```
