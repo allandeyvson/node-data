@@ -49,8 +49,8 @@ class PostgresSQLStrategy extends InterfaceDataBase {
         return this.schema.findAll({where: item, raw: true})
     }
 
-    async update(item){
-        return this.schema.update(item, {where: {id : item.id}})
+    async update(id, item){
+        return this.schema.update(item, {where: {id : id}})
     }
 
     delete(id){

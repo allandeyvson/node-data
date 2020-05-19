@@ -5,6 +5,9 @@ const Mongo = require('../db/strategies/mongoDB/mongoDBStrategy')
 const TeamSchema = require('../db/strategies/mongoDB/schemas/team')
 const TeamRoute = require('./routes/teamRoute')
 
+const UserSchema = require('../db/strategies/postgres/schemas/user')
+const Postgres = require('../db/strategies/postgres/postgresSQLStrategy')
+
 const AuthRoute = require('./routes/authRoute')
 const apiKey = require('./credentials.json').privateKey
 const HapiJwt = require('hapi-auth-jwt2')
@@ -25,6 +28,10 @@ function mapRoutes(instance, methods) {
 async function main() {
     const connection = Mongo.connect()
     const context =  new Context(new Mongo(connection, TeamSchema))
+
+    const connectionPostgres = await Postgres.connect()
+    const model = await Postgres.defineModel(connectionPostgres, UserSchema)
+    const contextPostgres = new Context(new Postgres(connection, model))
     
     const swaggerOptions = {
         info: {
@@ -49,8 +56,16 @@ async function main() {
         /*options: {
             //expireIn: 20
         }*/
-        validate: (data, request) => {
-            //colocar validações aqui
+        validate: async (data, request) => {
+            const [result] = await contextPostgres.read({
+                username: data.username.toLowerCase()
+            })
+            
+            if(!result){
+                return {
+                    isValid: false
+                }
+            }
             return {
                 isValid: true
             }
@@ -58,7 +73,7 @@ async function main() {
     })
     api.auth.default('jwt')
     api.route([
-        ... mapRoutes(new AuthRoute(apiKey), AuthRoute.methods()),
+        ... mapRoutes(new AuthRoute(apiKey, contextPostgres), AuthRoute.methods()),
         ... mapRoutes(new TeamRoute(context), TeamRoute.methods())
     ])
 

@@ -14,7 +14,7 @@ const MOCK_TEAM_UPDATE = {
 }
 let context = {}
 
-describe.skip('Postgres Strategy', function() {
+describe('Postgres Strategy', function() {
     
     this.timeout(Infinity);
     
@@ -52,7 +52,7 @@ describe.skip('Postgres Strategy', function() {
             ...preUpdateItem,
             name: 'Liverpool'
         }
-        const [result] = await context.update(updateItem)
+        const [result] = await context.update(updateItem.id, updateItem)
         const [posUpdateItem] = await context.read({id: updateItem.id})
 
         assert.deepEqual(result, 1)
