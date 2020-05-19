@@ -1,7 +1,7 @@
 const assert = require('assert')
-const MongoDBStrategy = require('../../../db/strategies/mongoDB/mongoDBStrategy')
-const Context = require('../../../db/strategies/base/contextStrategy')
-const TeamSchema = require('../../../db/strategies/mongoDB/schemas/team')
+const MongoDBStrategy = require('../db/strategies/mongoDB/mongoDBStrategy')
+const Context = require('../db/strategies/base/contextStrategy')
+const TeamSchema = require('../db/strategies/mongoDB/schemas/team')
 
 const MOCK_TEAM_CREATE = {
     name: 'Palmeiras',

@@ -1,7 +1,7 @@
 const assert = require('assert')
-const PostgresSQLStrategy = require('../../../db/strategies/postgres/postgresSQLStrategy')
-const Context = require('../../../db/strategies/base/contextStrategy')
-const TeamSchema = require('../../../db/strategies/postgres/schemas/team')
+const PostgresSQLStrategy = require('../db/strategies/postgres/postgresSQLStrategy')
+const Context = require('../db/strategies/base/contextStrategy')
+const TeamSchema = require('../db/strategies/postgres/schemas/team')
 
 const MOCK_TEAM_CREATE = {
     name: 'Palmeiras',

@@ -4,7 +4,7 @@
   "description": "Projeto contendo implementações de: multdatasources (SQL e NoSQL), serviço RESTFul, web token e documentação com swagger",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive src/test"
+    "test": "mocha src/test/*.test.js"
   },
   "repository": {
     "type": "git",
