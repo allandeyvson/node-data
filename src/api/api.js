@@ -28,6 +28,8 @@ const Vision = require('vision')
 const Inert = require('inert')
 const HapiSwagger = require('hapi-swagger')
 
+const PasswordHelper = require('../helpers/passwordHelper')
+
 
 const api = new Hapi.Server({
     port: process.env.PORT
@@ -44,6 +46,8 @@ async function main() {
     const connectionPostgres = await Postgres.connect()
     const model = await Postgres.defineModel(connectionPostgres, UserSchema)
     const contextPostgres = new Context(new Postgres(connection, model))
+
+    await createUserAdmin(contextPostgres)
     
     const swaggerOptions = {
         info: {
@@ -94,4 +98,16 @@ async function main() {
 
     return api
 }
+
+async function createUserAdmin(contextPostgres) {
+    const [result] = await contextPostgres.read({ username: process.env.USER_ADMIN })
+    if (!result) {
+        const hash = await PasswordHelper.hashPassword(process.env.PASS_ADMIN)
+        await contextPostgres.create({
+            username: process.env.USER_ADMIN,
+            password: hash
+        })
+    }
+}
 module.exports = main()
+
