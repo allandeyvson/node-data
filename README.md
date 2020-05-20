@@ -1,4 +1,11 @@
-Aplicação sendo executada no endereço: https://teams-data.herokuapp.com/documentation
+API disponível no endereço:
+
+    https://teams-data.herokuapp.com/
+
+Veja documentação em:
+
+    https://teams-data.herokuapp.com/documentation
+
 
 Comandos para execução do projeto:
 
@@ -30,3 +37,12 @@ docker exec -it mongodb \
 ```
 docker exec -it CONTAINER_ID mongo -u dev -p minhasenhadev --authenticationDatabase teams 
 ```
+
+
+Links úteis: 
+
+https://www.mongodb.com/cloud
+
+https://www.heroku.com/
+
+https://pm2.io/
