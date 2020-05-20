@@ -1,8 +1,9 @@
 const assert = require('assert')
 const api = require('../api/api')
-const token = require('./credentials.json').token
 
+let token = {}
 let app = {}
+let headers = {}
 
 const MOCK_TEAM_CREATE = {
     name: 'ABC',
@@ -14,10 +15,6 @@ const MOCK_TEAM_UPDATE = {
     country: 'Brasil'
 }
 
-const headers = {
-    authorization: token
-}
-
 let MOCK_ID_TEAM_CREATE = ''
 let MOCK_ID_TEAM_UPDATE = ''
 
@@ -26,14 +23,31 @@ describe('Suite de testes API', function (){
 
     this.beforeAll(async () => {
         app = await api
+        
+        const resultToken = await app.inject({
+            method: 'POST',
+            url: '/login',
+            payload: {
+                username: process.env.USER_ADMIN,
+                password: process.env.PASS_ADMIN
+            }
+        })
+        const data = JSON.parse(resultToken.payload)
+        token = data.token
+        headers = {
+            authorization: token
+        }
+
         const result = await app.inject({
             method: 'POST',
             url: '/teams',
             headers,
             payload: MOCK_TEAM_UPDATE
         })
+
         const { _id } = JSON.parse(result.payload)
         MOCK_ID_TEAM_UPDATE = _id
+
     })
 
     this.afterAll(async () => {

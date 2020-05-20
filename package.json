@@ -4,9 +4,9 @@
   "description": "Projeto contendo implementações de: multdatasources (SQL e NoSQL), serviço RESTFul, web token e documentação com swagger",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 10000 src/test/*.test.js",
+    "test": "mocha src/test/*.test.js",
     "test:prod": "cross-env NODE_ENV=prod npm t",
-    "prod": "cross-env NODE_ENV=prod node index.js"
+    "prod": "cross-env NODE_ENV=prod pm2-runtime index.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "mongoose": "^5.9.12",
     "pg": "^8.0.3",
     "pg-hstore": "^2.3.3",
+    "pm2": "^4.4.0",
     "sequelize": "^5.21.7",
     "vision": "^5.4.4"
   },

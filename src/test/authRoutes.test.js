@@ -1,6 +1,5 @@
 const assert = require('assert')
 const api = require('../api/api')
-const credentials = require('./credentials.json')
 
 let app = {}
 
@@ -15,8 +14,8 @@ describe('Auth Suite Test', function () {
             method: 'POST',
             url: '/login',
             payload: {
-                username: credentials.username,
-                password: credentials.password
+                username: process.env.USER_ADMIN,
+                password: process.env.PASS_ADMIN
             }
         })
 
